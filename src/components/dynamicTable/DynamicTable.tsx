@@ -128,7 +128,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
     if (isMounted && columns.length > 0) {
       saveState(storageKey, perPage, columnWidths, columns);
     }
-  }, [columnWidths, perPage, storageKey, columns.length, isMounted]);
+  }, [columnWidths, perPage, storageKey, columns.length, isMounted, columns]);
 
   if (!data || data.length === 0 || columns.length === 0) {
     return <div className="text-center py-8 text-gray-500">{noDataText}</div>;
@@ -211,7 +211,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
                 className="hover:bg-gray-50 transition-colors"
                 style={{ height: tableRowHeight }}
               >
-                {columns.map((col, colIndex) => (
+                {columns.map((col) => (
                   <TableCell
                     key={`${col}-${rowIndex}`}
                     sx={getBodyCellStyles(columnWidths[col] ?? defaultColumnWidth, borderColor, tableRowHeight)}
@@ -225,7 +225,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
             {paginatedData.length < perPage &&
               Array.from({ length: perPage - paginatedData.length }).map((_, emptyRowIndex) => (
                 <TableRow key={`empty-${emptyRowIndex}`} style={{ height: tableRowHeight }}>
-                  {columns.map((col, colIndex) => (
+                  {columns.map((col) => (
                     <TableCell
                       key={`empty-${col}-${emptyRowIndex}`}
                       sx={getBodyCellStyles(columnWidths[col] ?? defaultColumnWidth, borderColor, tableRowHeight)}

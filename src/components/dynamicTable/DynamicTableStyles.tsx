@@ -1,3 +1,5 @@
+import { Theme } from '@mui/material/styles';
+
 // --- GLOBAL CONSTANTS ---
 export const DEFAULT_COLUMN_WIDTH = 250;
 export const MIN_COLUMN_WIDTH = 80;
@@ -21,7 +23,7 @@ export const getTableCellStyles = (currentWidth: number, minColumnWidth: number,
     maxWidth: maxColumnWidth,
     boxSizing: 'border-box' as const,
     fontWeight: 'bold',
-    backgroundColor: (theme: any) => theme.palette.background.paper,
+    backgroundColor: (theme: Theme) => theme.palette.background.paper,
     whiteSpace: 'nowrap' as const,
     overflow: 'hidden',
     textOverflow: 'ellipsis',

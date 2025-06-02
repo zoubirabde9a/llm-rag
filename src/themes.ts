@@ -1,5 +1,5 @@
 import { createTheme, ThemeOptions } from "@mui/material/styles";
-import { grey, deepOrange, purple } from '@mui/material/colors'; // Only keep used colors
+import { grey } from '@mui/material/colors'; // Only keep used colors
 
 // Define the possible theme names
 export type ThemeName =
@@ -67,6 +67,15 @@ const darkMode: ThemeOptions = {
         footer: { // Style footer cells (if any)
            color: grey[400],
            borderColor: 'rgba(255, 255, 255, 0.12)',
+        }
+      }
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.08)', // Subtle hover effect that maintains contrast
+          }
         }
       }
     },

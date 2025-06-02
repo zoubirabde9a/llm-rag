@@ -1,7 +1,4 @@
 import {
-  DEFAULT_COLUMN_WIDTH,
-  MIN_COLUMN_WIDTH,
-  MAX_COLUMN_WIDTH,
   AVERAGE_CHAR_WIDTH,
   CELL_PADDING,
 } from "./DynamicTableStyles";

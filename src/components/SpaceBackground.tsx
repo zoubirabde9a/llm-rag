@@ -40,7 +40,7 @@ export default function SpaceBackground() {
   }, []);
 
   // Animate individual particles
-  useFrame((state, delta) => {
+  useFrame(() => {
     if (ref.current) {
       const positions = ref.current.geometry.attributes.position.array as Float32Array;
       
@@ -87,7 +87,7 @@ export default function SpaceBackground() {
         <PointMaterial
           transparent
           color="#ffffff"
-          size={0.02}
+          size={0.03}
           sizeAttenuation={true}
           depthWrite={false}
         />
