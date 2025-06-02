@@ -8,9 +8,9 @@ export const DEFAULT_TABLE_ROW_HEIGHT = 53;
 export const DEFAULT_RESIZE_HANDLE_WIDTH = 16; // px
 export const AVERAGE_CHAR_WIDTH = 10; // Heuristic: Average width of a character in pixels
 export const CELL_PADDING = 24; // Heuristic: Combined horizontal padding within a cell
-export const BORDER_COLOR = "rgba(64, 156, 255, 0.2)"; // Futuristic blue border
-export const RESIZE_HANDLE_BG = "rgba(64, 156, 255, 0.1)";
-export const RESIZE_HANDLE_BG_HOVER = "rgba(64, 156, 255, 0.4)";
+export const BORDER_COLOR = "rgba(0, 255, 255, 0.3)"; // Cyan border for futuristic look
+export const RESIZE_HANDLE_BG = "rgba(0, 255, 255, 0.1)";
+export const RESIZE_HANDLE_BG_HOVER = "rgba(0, 255, 255, 0.4)";
 export const RESIZE_HANDLE_OPACITY = 0.5;
 export const RESIZE_HANDLE_OPACITY_HOVER = 1;
 export const NO_DATA_TEXT = "No data available.";
@@ -45,12 +45,25 @@ export const getTableCellStyles = (currentWidth: number, minColumnWidth: number,
     paddingRight: `${resizeHandleWidth}px`,
     position: 'relative' as const,
     borderRight: `1px solid ${borderColor}`,
+    borderBottom: `1px solid ${borderColor}`,
     userSelect: 'none' as const,
     backdropFilter: 'blur(10px)',
-    transition: 'all 0.3s ease',
+    willChange: 'width',
     '&:hover': {
       backgroundColor: 'rgba(64, 156, 255, 0.1)',
       color: '#90caf9',
+      boxShadow: `0 0 10px ${borderColor}`,
+    },
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      width: '4px',
+      height: '4px',
+      backgroundColor: borderColor,
+      clipPath: 'polygon(0 0, 100% 0, 100% 100%)',
+      pointerEvents: 'none',
     },
 });
 
@@ -64,12 +77,12 @@ export const getResizeHandleStyles = (resizeHandleWidth: number, resizeHandleBg:
     cursor: 'col-resize' as const,
     backgroundColor: resizeHandleBg,
     opacity: resizeHandleOpacity,
-    transition: 'all 0.3s ease',
     zIndex: 10,
     boxSizing: 'border-box' as const,
+    willChange: 'opacity, background-color',
     '&:hover': {
-      backgroundColor: 'rgba(64, 156, 255, 0.4)',
-      boxShadow: '0 0 15px rgba(64, 156, 255, 0.3)',
+      backgroundColor: 'rgba(0, 255, 255, 0.4)',
+      boxShadow: '0 0 15px rgba(0, 255, 255, 0.3)',
     },
 });
 
@@ -80,15 +93,28 @@ export const getBodyCellStyles = (currentWidth: number, borderColor: string, tab
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap' as const,
     borderRight: `1px solid ${borderColor}`,
+    borderBottom: `1px solid ${borderColor}`,
     boxSizing: 'border-box' as const,
     height: tableRowHeight,
     color: '#e1e1e1',
-    transition: 'all 0.3s ease',
+    willChange: 'width',
+    position: 'relative' as const,
     '&:hover': {
       backgroundColor: 'rgba(64, 156, 255, 0.1)',
       color: '#90caf9',
       transform: 'scale(1.01)',
-      boxShadow: '0 0 15px rgba(64, 156, 255, 0.2)',
+      boxShadow: `0 0 15px ${borderColor}`,
+    },
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      width: '4px',
+      height: '4px',
+      backgroundColor: borderColor,
+      clipPath: 'polygon(0 0, 100% 0, 100% 100%)',
+      pointerEvents: 'none',
     },
 });
 
@@ -98,6 +124,7 @@ export const tableContainerStyles = {
     maxHeight: '70vh',
     animation: 'fadeIn 0.8s ease-out',
     ...fadeIn,
+    willChange: 'transform',
     '&::-webkit-scrollbar': {
       width: '8px',
       height: '8px',
@@ -106,10 +133,10 @@ export const tableContainerStyles = {
       background: 'rgba(13, 17, 23, 0.7)',
     },
     '&::-webkit-scrollbar-thumb': {
-      background: 'rgba(64, 156, 255, 0.3)',
+      background: 'rgba(0, 255, 255, 0.3)',
       borderRadius: '4px',
       '&:hover': {
-        background: 'rgba(64, 156, 255, 0.5)',
+        background: 'rgba(0, 255, 255, 0.5)',
       },
     },
 };
@@ -120,7 +147,20 @@ export const tableStyles = {
     minWidth: '100%',
     background: 'rgba(13, 17, 23, 0.7)',
     backdropFilter: 'blur(10px)',
-    borderRadius: '8px',
-    border: '1px solid rgba(64, 156, 255, 0.2)',
-    boxShadow: '0 0 20px rgba(64, 156, 255, 0.1)',
+    borderRadius: '0',
+    border: `1px solid ${BORDER_COLOR}`,
+    boxShadow: `0 0 20px ${BORDER_COLOR}`,
+    willChange: 'transform',
+    '& .MuiTableHead-root': {
+      '& .MuiTableCell-root': {
+        borderBottom: `2px solid ${BORDER_COLOR}`,
+      },
+    },
+    '& .MuiTableBody-root': {
+      '& .MuiTableRow-root:last-child': {
+        '& .MuiTableCell-root': {
+          borderBottom: 'none',
+        },
+      },
+    },
 }; 
