@@ -8,13 +8,27 @@ export const DEFAULT_TABLE_ROW_HEIGHT = 53;
 export const DEFAULT_RESIZE_HANDLE_WIDTH = 16; // px
 export const AVERAGE_CHAR_WIDTH = 10; // Heuristic: Average width of a character in pixels
 export const CELL_PADDING = 24; // Heuristic: Combined horizontal padding within a cell
-export const BORDER_COLOR = "#e0e0e0";
-export const RESIZE_HANDLE_BG = "rgba(0, 0, 255, 0.1)";
-export const RESIZE_HANDLE_BG_HOVER = "rgba(0, 0, 255, 0.3)";
+export const BORDER_COLOR = "rgba(64, 156, 255, 0.2)"; // Futuristic blue border
+export const RESIZE_HANDLE_BG = "rgba(64, 156, 255, 0.1)";
+export const RESIZE_HANDLE_BG_HOVER = "rgba(64, 156, 255, 0.4)";
 export const RESIZE_HANDLE_OPACITY = 0.5;
 export const RESIZE_HANDLE_OPACITY_HOVER = 1;
 export const NO_DATA_TEXT = "No data available.";
 export const PAGINATION_OPTIONS = [5, 8, 10, 20, 50, 100];
+
+// Animation keyframes
+const fadeIn = {
+  '@keyframes fadeIn': {
+    '0%': {
+      opacity: 0,
+      transform: 'translateY(20px)',
+    },
+    '100%': {
+      opacity: 1,
+      transform: 'translateY(0)',
+    },
+  },
+};
 
 // Styles for table cells
 export const getTableCellStyles = (currentWidth: number, minColumnWidth: number, maxColumnWidth: number, borderColor: string, resizeHandleWidth: number) => ({
@@ -22,8 +36,9 @@ export const getTableCellStyles = (currentWidth: number, minColumnWidth: number,
     minWidth: minColumnWidth,
     maxWidth: maxColumnWidth,
     boxSizing: 'border-box' as const,
-    fontWeight: 'bold',
-    backgroundColor: (theme: Theme) => theme.palette.background.paper,
+    fontWeight: 600,
+    backgroundColor: 'rgba(13, 17, 23, 0.7)',
+    color: '#64b5f6',
     whiteSpace: 'nowrap' as const,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -31,6 +46,12 @@ export const getTableCellStyles = (currentWidth: number, minColumnWidth: number,
     position: 'relative' as const,
     borderRight: `1px solid ${borderColor}`,
     userSelect: 'none' as const,
+    backdropFilter: 'blur(10px)',
+    transition: 'all 0.3s ease',
+    '&:hover': {
+      backgroundColor: 'rgba(64, 156, 255, 0.1)',
+      color: '#90caf9',
+    },
 });
 
 // Styles for resize handle
@@ -43,9 +64,13 @@ export const getResizeHandleStyles = (resizeHandleWidth: number, resizeHandleBg:
     cursor: 'col-resize' as const,
     backgroundColor: resizeHandleBg,
     opacity: resizeHandleOpacity,
-    transition: 'opacity 0.2s ease-in-out, background-color 0.2s ease-in-out',
+    transition: 'all 0.3s ease',
     zIndex: 10,
     boxSizing: 'border-box' as const,
+    '&:hover': {
+      backgroundColor: 'rgba(64, 156, 255, 0.4)',
+      boxShadow: '0 0 15px rgba(64, 156, 255, 0.3)',
+    },
 });
 
 // Styles for body cells
@@ -57,16 +82,45 @@ export const getBodyCellStyles = (currentWidth: number, borderColor: string, tab
     borderRight: `1px solid ${borderColor}`,
     boxSizing: 'border-box' as const,
     height: tableRowHeight,
+    color: '#e1e1e1',
+    transition: 'all 0.3s ease',
+    '&:hover': {
+      backgroundColor: 'rgba(64, 156, 255, 0.1)',
+      color: '#90caf9',
+      transform: 'scale(1.01)',
+      boxShadow: '0 0 15px rgba(64, 156, 255, 0.2)',
+    },
 });
 
 // Styles for table container
 export const tableContainerStyles = {
     overflowX: 'auto' as const,
     maxHeight: '70vh',
+    animation: 'fadeIn 0.8s ease-out',
+    ...fadeIn,
+    '&::-webkit-scrollbar': {
+      width: '8px',
+      height: '8px',
+    },
+    '&::-webkit-scrollbar-track': {
+      background: 'rgba(13, 17, 23, 0.7)',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: 'rgba(64, 156, 255, 0.3)',
+      borderRadius: '4px',
+      '&:hover': {
+        background: 'rgba(64, 156, 255, 0.5)',
+      },
+    },
 };
 
 // Styles for table
 export const tableStyles = {
     tableLayout: 'fixed' as const,
     minWidth: '100%',
+    background: 'rgba(13, 17, 23, 0.7)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '8px',
+    border: '1px solid rgba(64, 156, 255, 0.2)',
+    boxShadow: '0 0 20px rgba(64, 156, 255, 0.1)',
 }; 

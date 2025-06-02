@@ -18,18 +18,32 @@ export function useThemeContext() {
 }
 
 export default function ClientThemeProvider({ children }: { children: React.ReactNode }) {
-  const [themeName, setThemeName] = useState<ThemeName>(() => {
-    if (typeof window !== "undefined") {
-      return (localStorage.getItem("themeName") as ThemeName) || "classicLight";
-    }
-    return "classicLight";
-  });
+  // Initialize with a default theme
+  const [themeName, setThemeName] = useState<ThemeName>("classicLight");
+  const [mounted, setMounted] = useState(false);
 
+  // Only access localStorage after component mounts
   useEffect(() => {
-    localStorage.setItem("themeName", themeName);
-  }, [themeName]);
+    const savedTheme = localStorage.getItem("themeName") as ThemeName;
+    if (savedTheme && Object.keys(themes).includes(savedTheme)) {
+      setThemeName(savedTheme);
+    }
+    setMounted(true);
+  }, []);
+
+  // Save theme preference
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem("themeName", themeName);
+    }
+  }, [themeName, mounted]);
 
   const theme = useMemo(() => themes[themeName], [themeName]);
+
+  // Prevent flash of wrong theme
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <ThemeContext.Provider value={{ themeName, setThemeName }}>

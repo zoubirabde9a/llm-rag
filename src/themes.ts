@@ -183,10 +183,10 @@ const darkMode: ThemeOptions = {
 const gradientGlow: ThemeOptions = {
   palette: {
     mode: "dark",
-    primary: { main: "#a259f7" }, // Vibrant Purple
-    secondary: { main: "#ff6ec4" }, // Pink Accent
-    background: { default: "#1a1333", paper: "#231942" }, // Deep purple gradient base
-    text: { primary: "#fff", secondary: grey[300] },
+    primary: { main: "#9c27b0" }, // Material UI Purple
+    secondary: { main: "#e91e63" }, // Material UI Pink
+    background: { default: "#1a1a2e", paper: "#2d2d4d" }, // Deep purple-tinted dark background
+    text: { primary: "#ffffff", secondary: grey[300] },
     error: { main: "#ff5370" },
     warning: { main: "#ffb74d" },
     info: { main: "#64b5f6" },
@@ -199,27 +199,11 @@ const gradientGlow: ThemeOptions = {
     fontWeightMedium: 500,
   },
   components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        '@global': {
-          body: {
-            background: 'linear-gradient(270deg, #a259f7, #6a82fb, #ff6ec4, #a259f7)',
-            backgroundSize: '600% 600%',
-            animation: 'bgColorCycle 10s ease infinite',
-          },
-          '@keyframes bgColorCycle': {
-            '0%': { backgroundPosition: '0% 50%' },
-            '50%': { backgroundPosition: '100% 50%' },
-            '100%': { backgroundPosition: '0% 50%' },
-          },
-        },
-      },
-    },
     MuiPaper: { 
       styleOverrides: { 
         root: { 
-          background: 'linear-gradient(135deg, #231942 60%, #6a82fb 100%)',
-          boxShadow: "0 4px 20px rgba(162,89,247,0.25)",
+          backgroundColor: "#2d2d4d",
+          boxShadow: "0 4px 20px rgba(156,39,176,0.15)",
           borderRadius: 16
         } 
       } 
@@ -232,19 +216,19 @@ const gradientGlow: ThemeOptions = {
           fontWeight: 600,
         },
         containedPrimary: {
-          background: 'linear-gradient(90deg, #a259f7 0%, #6a82fb 100%)',
+          backgroundColor: "#9c27b0",
           color: '#fff',
-          boxShadow: '0 2px 8px rgba(162,89,247,0.25)',
+          boxShadow: '0 2px 8px rgba(156,39,176,0.25)',
           '&:hover': {
-            background: 'linear-gradient(90deg, #6a82fb 0%, #a259f7 100%)',
-            boxShadow: '0 4px 16px rgba(162,89,247,0.35)',
+            backgroundColor: "#7b1fa2",
+            boxShadow: '0 4px 16px rgba(156,39,176,0.35)',
           }
         },
         containedSecondary: {
-          background: 'linear-gradient(90deg, #ff6ec4 0%, #7878ff 100%)',
+          backgroundColor: "#e91e63",
           color: '#fff',
           '&:hover': {
-            background: 'linear-gradient(90deg, #7878ff 0%, #ff6ec4 100%)',
+            backgroundColor: "#c2185b",
           }
         }
       } 
@@ -252,26 +236,35 @@ const gradientGlow: ThemeOptions = {
     MuiAppBar: {
       styleOverrides: { 
         root: { 
-          background: 'linear-gradient(90deg, #a259f7 0%, #ff6ec4 100%)',
-          boxShadow: '0 2px 8px rgba(162,89,247,0.25)',
-          borderBottom: '1px solid rgba(255,255,255,0.1)'
+          backgroundColor: "#2d2d4d",
+          boxShadow: '0 2px 8px rgba(156,39,176,0.15)',
+          borderBottom: '1px solid rgba(156,39,176,0.2)'
         } 
       }
     },
     MuiTableCell: {
       styleOverrides: {
         head: {
-          backgroundColor: "#6a82fb",
+          backgroundColor: "#2d2d4d",
           color: "#fff",
           fontWeight: 'bold',
         },
         body: {
           color: "#fff",
-          borderColor: 'rgba(255, 255, 255, 0.12)',
+          borderColor: 'rgba(156,39,176,0.2)',
         },
         footer: {
           color: grey[300],
-          borderColor: 'rgba(255, 255, 255, 0.12)',
+          borderColor: 'rgba(156,39,176,0.2)',
+        }
+      }
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: 'rgba(156,39,176,0.15)', // Purple-tinted hover effect
+          }
         }
       }
     }

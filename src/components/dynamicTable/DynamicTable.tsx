@@ -168,7 +168,24 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
   };
 
   return (
-    <Paper elevation={2} className="rounded-lg overflow-hidden">
+    <Paper 
+      elevation={0} 
+      sx={{ 
+        backgroundColor: 'transparent',
+        animation: 'fadeIn 0.8s ease-out',
+        '@keyframes fadeIn': {
+          '0%': {
+            opacity: 0,
+            transform: 'translateY(20px)',
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translateY(0)',
+          },
+        },
+      }} 
+      className="rounded-lg overflow-hidden"
+    >
       <TableContainer sx={tableContainerStyles}>
         <Table stickyHeader sx={tableStyles}>
           <TableHead>
@@ -180,7 +197,16 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
                     key={col}
                     sx={getTableCellStyles(currentWidth, minColumnWidth, maxColumnWidth, borderColor, resizeHandleWidth)}
                   >
-                    <div title={col} style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <div 
+                      title={col} 
+                      style={{ 
+                        overflow: 'hidden', 
+                        textOverflow: 'ellipsis',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                      }}
+                    >
                       {col}
                     </div>
 
@@ -208,7 +234,14 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
             {paginatedData.map((row, rowIndex) => (
               <TableRow
                 key={`row-${rowIndex}`}
-                className="hover:bg-gray-50 transition-colors"
+                sx={{
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    backgroundColor: 'rgba(64, 156, 255, 0.1)',
+                    transform: 'scale(1.01)',
+                    boxShadow: '0 0 15px rgba(64, 156, 255, 0.2)',
+                  },
+                }}
                 style={{ height: tableRowHeight }}
               >
                 {columns.map((col) => (
@@ -224,7 +257,14 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
             ))}
             {paginatedData.length < perPage &&
               Array.from({ length: perPage - paginatedData.length }).map((_, emptyRowIndex) => (
-                <TableRow key={`empty-${emptyRowIndex}`} style={{ height: tableRowHeight }}>
+                <TableRow 
+                  key={`empty-${emptyRowIndex}`} 
+                  style={{ height: tableRowHeight }}
+                  sx={{
+                    opacity: 0.5,
+                    transition: 'all 0.3s ease',
+                  }}
+                >
                   {columns.map((col) => (
                     <TableCell
                       key={`empty-${col}-${emptyRowIndex}`}
@@ -246,6 +286,24 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
         rowsPerPage={perPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         rowsPerPageOptions={paginationOptions}
+        sx={{
+          backgroundColor: 'rgba(13, 17, 23, 0.7)',
+          backdropFilter: 'blur(10px)',
+          color: '#e1e1e1',
+          borderTop: '1px solid rgba(64, 156, 255, 0.2)',
+          '& .MuiTablePagination-select': {
+            color: '#64b5f6',
+          },
+          '& .MuiTablePagination-selectIcon': {
+            color: '#64b5f6',
+          },
+          '& .MuiIconButton-root': {
+            color: '#64b5f6',
+            '&:hover': {
+              backgroundColor: 'rgba(64, 156, 255, 0.1)',
+            },
+          },
+        }}
       />
     </Paper>
   );
