@@ -3,9 +3,11 @@ import { useFrame } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import { random } from 'maath';
+import { useTheme } from '@mui/material/styles';
 
 export default function SpaceBackground() {
   const ref = useRef<THREE.Points>(null);
+  const theme = useTheme();
   
   // Generate random points for stars with initial velocities
   const count = 5000;
@@ -86,8 +88,8 @@ export default function SpaceBackground() {
       <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
         <PointMaterial
           transparent
-          color="#ffffff"
-          size={0.03}
+          color={theme.palette.particleColor}
+          size={0.04}
           sizeAttenuation={true}
           depthWrite={false}
         />

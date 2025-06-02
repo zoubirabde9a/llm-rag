@@ -34,10 +34,7 @@ export default function ProductsPage() {
     <>
       <SpaceBackgroundWrapper />
       <main className="p-8 max-w-4xl mx-auto relative">
-        <div className="bg-black/50 backdrop-blur-sm p-8 rounded-lg shadow-xl">
-          <h1 className="text-2xl font-bold mb-6 text-white">Products Table</h1>
           <DynamicTable data={products} rowsPerPage={8} />
-        </div>
       </main>
     </>
   );

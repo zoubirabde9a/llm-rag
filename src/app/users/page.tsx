@@ -13,7 +13,6 @@ export default function UsersPage() {
 
   return (
     <main className="p-8 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Users Table</h1>
       <DynamicTable data={users} rowsPerPage={8} />
     </main>
   );

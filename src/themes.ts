@@ -1,6 +1,16 @@
 import { createTheme, ThemeOptions } from "@mui/material/styles";
 import { grey } from '@mui/material/colors'; // Only keep used colors
 
+// Extend the theme type to include particleColor
+declare module '@mui/material/styles' {
+  interface Palette {
+    particleColor: string;
+  }
+  interface PaletteOptions {
+    particleColor: string;
+  }
+}
+
 // Define the possible theme names
 export type ThemeName =
   | "classicLight"
@@ -15,8 +25,12 @@ const classicLight: ThemeOptions = {
     mode: "light",
     primary: { main: "#3f51b5" }, // Indigo
     secondary: { main: "#f50057" }, // Pink A400
-    background: { default: "#fafafa", paper: "#ffffff" },
+    background: {
+      default: "#f5f5f0", // "blanc cassé" – a warm, slightly off-white tone
+      paper: "#ffffff"    // pure white, if you still want to keep paper stark white
+    },
     text: { primary: "#212121", secondary: "#5f6368" },
+    particleColor: "#3f51b5", // Indigo particles for classic light theme
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -39,6 +53,7 @@ const darkMode: ThemeOptions = {
       disabled: grey[700],
     },
     divider: 'rgba(255, 255, 255, 0.12)', // Explicit divider color
+    particleColor: "#64b5f6", // Light blue particles for dark mode
   },
   typography: {
     fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
@@ -191,6 +206,7 @@ const gradientGlow: ThemeOptions = {
     warning: { main: "#ffb74d" },
     info: { main: "#64b5f6" },
     success: { main: "#81c784" },
+    particleColor: "#64b5f6", // Pink particles for gradient glow theme
   },
   typography: {
     fontFamily: '"Inter", "Roboto", "Arial", sans-serif',
