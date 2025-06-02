@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import DynamicTable from "../../components/DynamicTable";
+import DynamicTable from "../../components/dynamicTable/DynamicTable";
 import { faker } from "@faker-js/faker";
 
 // Generate random user data
