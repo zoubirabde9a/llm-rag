@@ -102,7 +102,7 @@ export const getBodyCellStyles = (currentWidth: number, borderColor: string, tab
     '&:hover': {
       backgroundColor: 'rgba(64, 156, 255, 0.1)',
       color: '#90caf9',
-      transform: 'scale(1.01)',
+      transform: 'scale(1.002)',
       boxShadow: `0 0 15px ${borderColor}`,
     },
     '&::after': {

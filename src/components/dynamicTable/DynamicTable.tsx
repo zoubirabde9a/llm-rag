@@ -238,7 +238,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
                   transition: 'all 0.3s ease',
                   '&:hover': {
                     backgroundColor: 'rgba(64, 156, 255, 0.1)',
-                    transform: 'scale(1.01)',
+                    transform: 'scale(1.002)',
                     boxShadow: '0 0 15px rgba(64, 156, 255, 0.2)',
                   },
                 }}
