@@ -1,0 +1,211 @@
+Core Collections:
+
+Here's a breakdown of potential collections and their fields:
+
+
+users Collection (For CRM users, e.g., sales reps, managers)
+
+json
+
+{
+    "_id": UUID(), // Primary Key
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com", // Unique, Indexed
+    "passwordHash": "...", // Hashed password
+    "role": "sales_rep", // e.g., 'admin', 'manager', 'sales_rep'
+    "isActive": true,
+    "lastLoginAt": ISODate("2023-10-27T10:00:00Z"),
+    "createdAt": ISODate("2023-01-15T09:00:00Z"),
+    "updatedAt": ISODate("2023-10-26T14:30:00Z")
+}
+
+companies Collection
+
+json
+
+{
+    "_id": UUID(), // Primary Key
+    "name": "Acme Corp", // Indexed
+    "website": "https://acme.com",
+    "industry": "Technology", // Indexed
+    "phoneNumber": "+15551234567",
+    "addresses": [
+        {
+            "type": "billing", // 'shipping', 'office', etc.
+            "street": "123 Main St",
+            "city": "Anytown",
+            "state": "CA",
+            "postalCode": "90210",
+            "country": "USA"
+        }
+    ],
+    "description": "Leading provider of innovative solutions.",
+    "ownerId": UUID(), // References users._id (assigned user)
+    "customFields": [
+        { "key": "Annual Revenue", "value": "10M" },
+        { "key": "Employee Count", "value": 200 }
+    ],
+    "tags": ["enterprise", "priority_client"],
+    "createdAt": ISODate("2023-02-20T11:00:00Z"),
+    "updatedAt": ISODate("2023-10-25T16:45:00Z")
+}
+
+contacts Collection
+
+json
+
+{
+    "_id": UUID(), // Primary Key
+    "firstName": "Alice",
+    "lastName": "Smith", // Indexed
+    "email": "alice.smith@acme.com", // Indexed
+    "phoneNumbers": [
+        { "type": "work", "number": "+15559876543" },
+        { "type": "mobile", "number": "+15551112222" }
+    ],
+    "title": "CTO",
+    "companyId": UUID(), // References companies._id
+    "companyName": "Acme Corp", // Denormalized for quick display
+    "ownerId": UUID(), // References users._id (assigned user)
+    "description": "Key decision maker for technology purchases.",
+    "mailingAddress": { // Could also be an array like in companies
+        "street": "456 Tech Ave",
+        "city": "Anytown",
+        "state": "CA",
+        "postalCode": "90210",
+        "country": "USA"
+    },
+    "customFields": [
+        { "key": "LinkedIn Profile", "value": "linkedin.com/in/alicesmith" }
+    ],
+    "tags": ["decision_maker", "tech_savvy"],
+    "createdAt": ISODate("2023-03-10T14:20:00Z"),
+    "updatedAt": ISODate("2023-10-27T09:15:00Z")
+}
+
+leads Collection (Potential customers before they become qualified contacts/opportunities)
+
+json
+
+{
+    "_id": UUID(), // Primary Key
+    "firstName": "Bob",
+    "lastName": "Johnson",
+    "email": "bob.j@newbiz.com", // Indexed
+    "phoneNumber": "+15553334444",
+    "companyName": "NewBiz Inc.", // Potential company name
+    "source": "Website Form", // e.g., 'Referral', 'Cold Call', 'Trade Show'
+    "status": "new", // e.g., 'new', 'contacted', 'qualified', 'unqualified', 'converted' (Indexed)
+    "ownerId": UUID(), // References users._id (assigned user)
+    "notes": "Interested in Product X. Follow up next week.",
+    "convertedAt": null, // ISODate when converted
+    "convertedToContactId": null, // UUID of contact if converted
+    "convertedToCompanyId": null, // UUID of company if converted/created
+    "convertedToOpportunityId": null, // UUID of opportunity if converted
+    "customFields": [
+        { "key": "Budget Range", "value": "5k-10k" }
+    ],
+    "createdAt": ISODate("2023-10-01T08:30:00Z"),
+    "updatedAt": ISODate("2023-10-05T11:00:00Z")
+}
+
+opportunities (or deals) Collection
+
+json
+
+{
+    "_id": UUID(), // Primary Key
+    "name": "Q4 Enterprise Deal for Acme Corp", // Indexed
+    "companyId": UUID(), // References companies._id
+    "companyName": "Acme Corp", // Denormalized
+    "primaryContactId": UUID(), // References contacts._id (main contact for this deal)
+    // You might also have an array of other involved contactIds
+    // "involvedContactIds": [ UUID(), UUID() ],
+    "amount": 50000.00,
+    "currency": "USD",
+    "stage": "proposal_sent", // e.g., 'qualification', 'needs_analysis', 'proposal_sent', 'negotiation', 'closed_won', 'closed_lost' (Indexed)
+    "probability": 0.75, // (0.0 to 1.0)
+    "expectedCloseDate": ISODate("2023-12-15T00:00:00Z"),
+    "actualCloseDate": null, // ISODate when actually closed
+    "ownerId": UUID(), // References users._id
+    "description": "Potential to expand with Product Y next quarter.",
+    "customFields": [
+        { "key": "Competitor", "value": "Beta Solutions" }
+    ],
+    "tags": ["enterprise_deal", "q4_target"],
+    "createdAt": ISODate("2023-09-15T10:00:00Z"),
+    "updatedAt": ISODate("2023-10-26T17:00:00Z")
+}
+
+activities Collection (Calls, Emails, Meetings, Notes, Tasks)
+
+json
+
+{
+    "_id": UUID(), // Primary Key
+    "type": "call", // 'email', 'meeting', 'note', 'task' (Indexed)
+    "subject": "Follow-up call regarding proposal",
+    "notes_description": "Discussed pricing. Alice is reviewing with her team.",
+    "activityDate": ISODate("2023-10-27T11:30:00Z"), // When the activity happened or is scheduled
+    "userId": UUID(), // References users._id (who performed/logged it, or is assigned)
+    "relatedTo": [ // Polymorphic association: an activity can relate to multiple entities
+        { "entityType": "opportunity", "entityId": UUID() }, // e.g., opportunity._id
+        { "entityType": "contact", "entityId": UUID() }      // e.g., contact._id
+        // Could also be 'company' or 'lead'
+    ],
+    // For tasks:
+    "status": "completed", // 'pending', 'in_progress', 'completed', 'deferred' (for tasks)
+    "dueDate": ISODate("2023-10-28T17:00:00Z"), // (For tasks)
+
+    "createdAt": ISODate("2023-10-27T11:35:00Z"),
+    "updatedAt": ISODate("2023-10-27T11:35:00Z")
+}
+
+Generating and Using UUIDs in MongoDB:
+
+
+Server-Side (MongoDB Shell or Drivers):
+
+When inserting, you can generate a UUID:
+javascript
+
+// MongoDB Shell
+db.contacts.insertOne({
+    _id: new UUID(), // Generates a BSON UUID
+    firstName: "Test",
+    lastName: "User",
+    // ... other fields
+});
+Many MongoDB drivers (Node.js, Python's PyMongo, etc.) have helper functions to generate UUIDs that are compatible with BSON UUID type.
+
+Application-Side:
+
+You can generate UUIDs in your application code (e.g., using uuid library in Node.js) and pass them as strings or BSON UUID objects to MongoDB.
+javascript
+
+// Node.js example with 'uuid' package
+import { v4 as uuidv4 } from 'uuid';
+const newContactId = uuidv4(); // Generates a string UUID
+// If your driver supports it, you might convert this to a BSON UUID type before insertion
+// or the driver might handle it automatically.
+
+Indexing Strategy (Examples):
+
+
+users.email: Unique index for login.
+
+companies.name: For searching companies.
+
+companies.industry: For filtering.
+
+contacts.lastName, contacts.email: For searching and uniqueness.
+
+contacts.companyId: To find all contacts for a company.
+
+leads.email, leads.status: For searching and filtering by status.
+
+opportunities.name, opportunities.stage, opportunities.ownerId: For searching, pipeline views, and user-specific views.
+
+activities.type, activities.userId, activities.relatedTo.entityId: For filtering by type, user, and associated records.
+For relatedTo array, you might need a multi-key index: db.activities.createIndex({ "relatedTo.entityId": 1 })
