@@ -2,8 +2,8 @@
 import React from "react";
 import DynamicTable from "../../components/dynamicTable/DynamicTable";
 import { faker } from "@faker-js/faker";
-import SpaceBackgroundWrapper from "../../components/SpaceBackgroundWrapper";
-
+import SpaceBackgroundWrapper from "../../components/spaceBackground/SpaceBackgroundWrapper";
+    
 export default function ProductsPage() {
   // Use useMemo to ensure data is stable between renders
   const products = React.useMemo(() => Array.from({ length: 37 }, () => ({
@@ -34,7 +34,7 @@ export default function ProductsPage() {
     <>
       <SpaceBackgroundWrapper />
       <main className="p-8 max-w-4xl mx-auto relative">
-          <DynamicTable data={products} rowsPerPage={8} />
+        <DynamicTable data={products} rowsPerPage={8} />
       </main>
     </>
   );
