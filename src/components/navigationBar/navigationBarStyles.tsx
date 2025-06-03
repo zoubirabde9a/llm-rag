@@ -3,7 +3,7 @@ import { Box, ListItemButton } from '@mui/material';
 
 export const NavigationContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
-  height: '100vh',
+  height: '70vh',
   backgroundColor: theme.palette.mode === 'dark' ? 'rgba(18, 18, 18, 0.95)' : 'rgba(245, 245, 245, 0.95)',
   backdropFilter: 'blur(10px)',
   borderRight: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
