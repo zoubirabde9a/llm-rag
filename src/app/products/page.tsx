@@ -3,8 +3,9 @@ import React from "react";
 import DynamicTable from "../../components/dynamicTable/DynamicTable";
 import { faker } from "@faker-js/faker";
 import SpaceBackgroundWrapper from "../../components/spaceBackground/SpaceBackgroundWrapper";
-import LlmQuery from "@/components/llmQuery/llmQuery";
-    
+import NavigationBar from "../../components/navigationBar/navigationBar";
+import { Box } from "@mui/material";
+
 export default function ProductsPage() {
   // Use useMemo to ensure data is stable between renders
   const products = React.useMemo(() => Array.from({ length: 37 }, () => ({
@@ -31,13 +32,20 @@ export default function ProductsPage() {
     Shipping: faker.commerce.productAdjective(),
   })), []); // Empty dependency array ensures data is generated only once
 
+  const handleNavigation = (itemId: string) => {
+    console.log('Navigated to:', itemId);
+    // Add navigation logic here
+  };
+
   return (
-    <>
-      <SpaceBackgroundWrapper />
-      <main className="p-8 max-w-4xl mx-auto relative">
-        <DynamicTable data={products} rowsPerPage={8} />
-        <LlmQuery onSubmit={(query) => console.log('Query submitted:', query)} />
-      </main>
-    </>
+    <Box sx={{ display: 'flex', height: '100vh' }}>
+      <NavigationBar onNavigate={handleNavigation} />
+      <Box sx={{ flex: 1, overflow: 'auto' }}>
+        <SpaceBackgroundWrapper />
+        <main className="p-8 max-w-4xl mx-auto relative">
+          <DynamicTable data={products} rowsPerPage={8} />
+        </main>
+      </Box>
+    </Box>
   );
 } 
