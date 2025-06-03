@@ -206,7 +206,7 @@ const gradientGlow: ThemeOptions = {
     warning: { main: "#ffb74d" },
     info: { main: "#64b5f6" },
     success: { main: "#81c784" },
-    particleColor: "#64b5f6", // Pink particles for gradient glow theme
+    particleColor: "#ffffff", // Pink particles for gradient glow theme
   },
   typography: {
     fontFamily: '"Inter", "Roboto", "Arial", sans-serif',

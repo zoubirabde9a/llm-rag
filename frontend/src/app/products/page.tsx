@@ -38,7 +38,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <Box sx={{ display: 'flex', height: '100vh' }}>
+    <Box sx={{ display: 'flex'}}>
       <NavigationBar onNavigate={handleNavigation} />
       <Box sx={{ flex: 1, overflow: 'auto' }}>
         <SpaceBackgroundWrapper />
