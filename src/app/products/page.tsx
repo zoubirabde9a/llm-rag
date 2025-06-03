@@ -3,6 +3,7 @@ import React from "react";
 import DynamicTable from "../../components/dynamicTable/DynamicTable";
 import { faker } from "@faker-js/faker";
 import SpaceBackgroundWrapper from "../../components/spaceBackground/SpaceBackgroundWrapper";
+import LlmQuery from "@/components/llmQuery/llmQuery";
     
 export default function ProductsPage() {
   // Use useMemo to ensure data is stable between renders
@@ -35,6 +36,7 @@ export default function ProductsPage() {
       <SpaceBackgroundWrapper />
       <main className="p-8 max-w-4xl mx-auto relative">
         <DynamicTable data={products} rowsPerPage={8} />
+        <LlmQuery onSubmit={(query) => console.log('Query submitted:', query)} />
       </main>
     </>
   );
